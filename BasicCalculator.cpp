@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stack>
+
 using namespace std;
 
 #define MAX (20)
@@ -24,6 +26,36 @@ int main(){
 	InputData();//입력
 
 	//여기서부터 작성
+	stack<int> stk;
+	ans = 0;
+	int t;
+	
+	stk.push(M[0]);
+	
+	for (int i = 1; i < N; i++) {
+		switch (op[i]) {
+			case '+':
+				stk.push(M[i]);
+				break;
+			case '-':
+				stk.push(-M[i]);
+				break;
+			case '*':
+				t = stk.top()*M[i];
+				stk.pop();
+				stk.push(t);
+				break;
+			case '/':
+				t = stk.top()/M[i];
+				stk.pop();
+				stk.push(t);
+				break;
+		}
+	}
+	while (!stk.empty()) {
+		ans += stk.top();
+		stk.pop();
+	}
 
 	cout << ans << "\n";
 
